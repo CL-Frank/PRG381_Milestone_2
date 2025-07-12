@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    private static final String DB_URL = "jdbc:derby://localhost:1527/wellness_db";
+    private static final String DB_URL = "jdbc:derby://localhost:1527/BCWellness";
     private static final String USER = "frank";
     private static final String PASSWORD = "0618";
 
