@@ -23,8 +23,9 @@ git clone https://github.com/<your-username>/BCWellnessDesktop.git
 If not already set up:
 1. Download Apache Derby from the official site
 2. Extract it to a location such as `C:\Derby`
-3. In NetBeans, go to **Tools → Java DB**
-4. Set:
+3. In NetBeans, go to **Services → Databases**
+4. Right click **JavaDB → Properties**
+5. Set:
    - **Java DB installation:** `C:\Derby`
    - **Database location:** `C:\DerbyDatabases`
 
