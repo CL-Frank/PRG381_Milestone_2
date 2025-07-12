@@ -15,6 +15,8 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        setSize(800,500);
+        setContentPane(new AppointmentPanel());
     }
 
     /**

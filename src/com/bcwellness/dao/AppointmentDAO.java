@@ -16,13 +16,17 @@ import java.util.ArrayList;
 public class AppointmentDAO {
     private Connection conn;
     
+    public AppointmentDAO(Connection conn){
+        this.conn = conn;
+    }
+    
     public void addAppointment(Appointment a) throws SQLException{
         String sql = "INSERT INTO APPOINTMENTS (studentName, councellorID, date, time, status) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, a.getStudentName());
-        stmt.setString(2, a.getCouncellorName());
-        stmt.setString(3, a.getDate());
-        stmt.setString(4, a.getTime());
+        stmt.setInt(2, a.getCouncellorID());
+        stmt.setDate(3, a.getDate());
+        stmt.setTime(4, a.getTime());
         stmt.setString(5, a.getStatus());
     }
     
@@ -34,11 +38,11 @@ public class AppointmentDAO {
         
         while(rs.next()){
             Appointment a = new Appointment(
-            rs.getString("id"),
+            rs.getInt("id"),
             rs.getString("studentName"),
-            rs.getString("councellorID"),
-            rs.getString("date"),
-            rs.getString("time"),
+            rs.getInt("councellorID"),
+            rs.getDate("date"),
+            rs.getTime("time"),
             rs.getString("status")
             );
             list.add(a);
@@ -47,23 +51,23 @@ public class AppointmentDAO {
         return list;
     }
     
-    public void UpdateAppointment(Appointment a)throws SQLException{
+    public void updateAppointment(Appointment a)throws SQLException{
         String sql = "UPDATE APPOINTMENTS SET studentName = ?, councellorID = ?, date = ?, time = ?, status = ? WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, a.getStudentName());
-        stmt.setString(2, a.getCouncellorName());
-        stmt.setString(3, a.getDate());
-        stmt.setString(4, a.getTime());
+        stmt.setInt(2, a.getCouncellorID());
+        stmt.setDate(3, a.getDate());
+        stmt.setTime(4, a.getTime());
         stmt.setString(5, a.getStatus());
-        stmt.setString(6, a.getId());
+        stmt.setInt(6, a.getId());
         stmt.executeQuery();
         
         
     }
-    public void deleteAppointment(String id) throws SQLException{
+    public void deleteAppointment(int id) throws SQLException{
             String sql = "DELETE FROM APPOINTMENTS WHERE id =?";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, id);
+            stmt.setInt(1, id);
             stmt.executeQuery();
         }
 }

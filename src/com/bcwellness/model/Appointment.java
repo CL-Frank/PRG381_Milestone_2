@@ -12,17 +12,17 @@ import java.sql.Time;
  * @author USER-PC
  */
 public class Appointment {
-    private String id;
+    private int id;
     private String studentName;
-    private String councellorName;
-    private String date;
-    private String time;
+    private int councellorID;
+    private Date date;
+    private Time time;
     private String status;
 
-    public Appointment(String id, String studentName, String councellorName, String date, String time, String status) {
+    public Appointment(int id, String studentName, int councellorID, Date date, Time time, String status) {
         this.id = id;
         this.studentName = studentName;
-        this.councellorName = councellorName;
+        this.councellorID = councellorID;
         this.date = date;
         this.time = time;
         this.status = status;
@@ -30,7 +30,7 @@ public class Appointment {
     
     
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -38,15 +38,15 @@ public class Appointment {
         return studentName;
     }
 
-    public String getCouncellorName() {
-        return councellorName;
+    public int getCouncellorID() {
+        return councellorID;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public String getTime() {
+    public Time getTime() {
         return time;
     }
 
