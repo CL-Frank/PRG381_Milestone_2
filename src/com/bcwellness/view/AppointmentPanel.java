@@ -41,13 +41,12 @@ public class AppointmentPanel extends javax.swing.JPanel {
 //            }
 //        });
 
-tblAppointments.getSelectionModel().addListSelectionListener(e -> {
-    // Only trigger when selection is final (not adjusting)
-    if (!e.getValueIsAdjusting()) {
-        populateFieldsFromSelectedRow();
-    }
-});
-
+        tblAppointments.getSelectionModel().addListSelectionListener(e -> {
+            // Only trigger when selection is final (not adjusting)
+            if (!e.getValueIsAdjusting()) {
+                populateFieldsFromSelectedRow();
+            }
+        });
 
         controller = new AppointmentController();
         dpDate.getSettings().setDateRangeLimits(LocalDate.now().plusDays(1), null);
@@ -65,35 +64,37 @@ tblAppointments.getSelectionModel().addListSelectionListener(e -> {
         loadCounselorsIntoDropdown();
         loadStatusesIntoDropdown();
     }
-    private void populateFieldsFromSelectedRow() {
-    int row = tblAppointments.getSelectedRow();
-    if (row == -1) return;
 
-    try {
-        selectedAppointmentID = (int) tblAppointments.getValueAt(row, 0);
-        System.out.println("Selected ID: " + selectedAppointmentID);
+    private void populateFieldsFromSelectedRow() {
+        int row = tblAppointments.getSelectedRow();
         if (row == -1) {
             return;
         }
 
-        String student = (String) tblAppointments.getValueAt(row, 2);
-        LocalDate date = (LocalDate) tblAppointments.getValueAt(row, 3);
-        LocalTime time = (LocalTime) tblAppointments.getValueAt(row, 4);
-        String status = (String) tblAppointments.getValueAt(row, 5);
-        String counselorName = (String) tblAppointments.getValueAt(row, 1);
+        try {
+            selectedAppointmentID = (int) tblAppointments.getValueAt(row, 0);
+            System.out.println("Selected ID: " + selectedAppointmentID);
+            if (row == -1) {
+                return;
+            }
 
-        txtStudent1.setText(student);
-        dpDate.setDate(date);
-        dpTime.setTime(time);
-        drpdwnStatus.setSelectedItem(status);
-        drpdwnCounsellor.setSelectedItem(counselorName);
-        
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error loading appointment details.");
+            String student = (String) tblAppointments.getValueAt(row, 2);
+            LocalDate date = (LocalDate) tblAppointments.getValueAt(row, 3);
+            LocalTime time = (LocalTime) tblAppointments.getValueAt(row, 4);
+            String status = (String) tblAppointments.getValueAt(row, 5);
+            String counselorName = (String) tblAppointments.getValueAt(row, 1);
+
+            txtStudent1.setText(student);
+            dpDate.setDate(date);
+            dpTime.setTime(time);
+            drpdwnStatus.setSelectedItem(status);
+            drpdwnCounsellor.setSelectedItem(counselorName);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading appointment details.");
+        }
     }
-}
-
 
     private void loadAppointments() {
         try {
@@ -117,7 +118,6 @@ tblAppointments.getSelectionModel().addListSelectionListener(e -> {
             e.printStackTrace();
         }
     }
-
 
     private void loadCounselorsIntoDropdown() {
         try {

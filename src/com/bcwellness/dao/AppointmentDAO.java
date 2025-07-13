@@ -25,7 +25,7 @@ public class AppointmentDAO {
         String sql = "INSERT INTO APPOINTMENTS (student, counsellor_ID, date, time, status) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, a.getStudentName());
-        stmt.setInt(2, a.getCounselorID());
+        stmt.setInt(2, a.getCounsellorID());
         stmt.setDate(3, java.sql.Date.valueOf(a.getDate()));
         stmt.setTime(4, java.sql.Time.valueOf(a.getTime()));
         stmt.setString(5, a.getStatus());
@@ -35,7 +35,7 @@ public class AppointmentDAO {
     //Getting the counsellor name from the Counsellor table into appointment
     public ArrayList<Appointment> getAllAppointments() throws SQLException{
         ArrayList<Appointment> list = new ArrayList<>();
-        String sql = "SELECT a.id, a.student, a.counsellor_ID, c.name AS counselorName, a.date, a.time, a.status "
+        String sql = "SELECT a.id, a.student, a.counsellor_ID, c.name AS counsellorName, a.date, a.time, a.status "
            + "FROM Appointments a JOIN Counsellors c ON a.counsellor_ID = c.id";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
@@ -45,7 +45,7 @@ public class AppointmentDAO {
             rs.getInt("id"),
             rs.getString("student"),
             rs.getInt("counsellor_ID"),
-            rs.getString("counselorName"),
+            rs.getString("counsellorName"),
             rs.getDate("date").toLocalDate(),
             rs.getTime("time").toLocalTime(),
             rs.getString("status")
@@ -60,7 +60,7 @@ public class AppointmentDAO {
         String sql = "UPDATE APPOINTMENTS SET student = ?, counsellor_id = ?, date = ?, time = ?, status = ? WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, a.getStudentName());
-        stmt.setInt(2, a.getCounselorID());
+        stmt.setInt(2, a.getCounsellorID());
         stmt.setDate(3, java.sql.Date.valueOf(a.getDate()));
         stmt.setTime(4, java.sql.Time.valueOf(a.getTime()));
         stmt.setString(5, a.getStatus());

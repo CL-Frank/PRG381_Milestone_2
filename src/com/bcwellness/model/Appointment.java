@@ -17,17 +17,17 @@ public class Appointment {
     private int id;
     private String studentName;
 //    counsellor name will be gotten from counsellor table 
-    private String counselor;
-    private int counselorID;
+    private String counsellor;
+    private int counsellorID;
     private LocalDate date;
     private LocalTime time;
     private String status;
 
-    public Appointment(int id, String studentName,int counselorID, String counselor, LocalDate date, LocalTime time, String status) {
+    public Appointment(int id, String studentName,int counsellorID, String counsellor, LocalDate date, LocalTime time, String status) {
         this.id = id;
         this.studentName = studentName;
-        this.counselorID = counselorID;
-        this.counselor = counselor;
+        this.counsellorID = counsellorID;
+        this.counsellor = counsellor;
         this.date = date;
         this.time = time;
         this.status = status;
@@ -44,11 +44,11 @@ public class Appointment {
     }
 
     public String getCounselorName  () {
-        return counselor;
+        return counsellor;
     }
     
-    public int getCounselorID(){
-        return counselorID;
+    public int getCounsellorID(){
+        return counsellorID;
     }
 
     public LocalDate getDate() {
