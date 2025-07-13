@@ -6,6 +6,8 @@ package com.bcwellness.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -14,15 +16,18 @@ import java.sql.Time;
 public class Appointment {
     private int id;
     private String studentName;
-    private int councellorID;
-    private Date date;
-    private Time time;
+//    counsellor name will be gotten from counsellor table 
+    private String counselor;
+    private int counselorID;
+    private LocalDate date;
+    private LocalTime time;
     private String status;
 
-    public Appointment(int id, String studentName, int councellorID, Date date, Time time, String status) {
+    public Appointment(int id, String studentName,int counselorID, String counselor, LocalDate date, LocalTime time, String status) {
         this.id = id;
         this.studentName = studentName;
-        this.councellorID = councellorID;
+        this.counselorID = counselorID;
+        this.counselor = counselor;
         this.date = date;
         this.time = time;
         this.status = status;
@@ -38,15 +43,19 @@ public class Appointment {
         return studentName;
     }
 
-    public int getCouncellorID() {
-        return councellorID;
+    public String getCounselorName  () {
+        return counselor;
+    }
+    
+    public int getCounselorID(){
+        return counselorID;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 

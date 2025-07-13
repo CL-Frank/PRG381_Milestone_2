@@ -7,6 +7,8 @@ import com.bcwellness.model.Appointment;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class AppointmentController {
@@ -21,9 +23,8 @@ public class AppointmentController {
         }
     }
 
-    public void addAppointment(String student, int counselorID, Date date, Time time, String status) {
+    public void addAppointment(Appointment a) {
         try {
-            Appointment a = new Appointment(0, student, counselorID, date, time, status);
             appointmentDAO.addAppointment(a);
         } catch (Exception e) {
             e.printStackTrace(); // Or handle more gracefully
