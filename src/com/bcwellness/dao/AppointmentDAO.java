@@ -35,7 +35,7 @@ public class AppointmentDAO {
     //Getting the counsellor name from the Counsellor table into appointment
     public ArrayList<Appointment> getAllAppointments() throws SQLException{
         ArrayList<Appointment> list = new ArrayList<>();
-        String sql = "SELECT a.id, a.student, a.counsellor_ID, c.name AS counsellorName, a.date, a.time, a.status "
+        String sql = "SELECT a.id, a.student, a.counsellor_id, c.name AS counsellorName, a.date, a.time, a.status "
            + "FROM Appointments a JOIN Counsellors c ON a.counsellor_ID = c.id";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
@@ -44,7 +44,7 @@ public class AppointmentDAO {
             Appointment a = new Appointment(
             rs.getInt("id"),
             rs.getString("student"),
-            rs.getInt("counsellor_ID"),
+            rs.getInt("counsellor_id"),
             rs.getString("counsellorName"),
             rs.getDate("date").toLocalDate(),
             rs.getTime("time").toLocalTime(),

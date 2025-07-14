@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Jul 14 18:25:31 SAST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0198-09c1-7951-00000e2f5c20 
+on database directory C:\Users\USER-PC\Documents\BC 2025\_PRG381\Project_Milestone_1\BCWellnessApplication\wellness_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@18b4aac2 
+Loaded from file:/C:/Users/USER-PC/Documents/BC%202025/_PRG381/Project_Milestone_1/BCWellnessApplication/src/com/bcwellness/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=24.0.1+9-30
+user.dir=C:\Users\USER-PC\Documents\BC 2025\_PRG381\Project_Milestone_1\BCWellnessApplication
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

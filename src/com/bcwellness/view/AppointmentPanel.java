@@ -8,10 +8,6 @@ import com.bcwellness.controller.AppointmentController;
 import com.bcwellness.model.*;
 import com.bcwellness.dao.CounselorDAO;
 import com.bcwellness.db.DBConnection;
-import com.github.lgooddatepicker.components.TimePickerSettings;
-
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -35,6 +31,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
      */
     public AppointmentPanel() {
         initComponents();
+        
 //        tblAppointments.addMouseListener(new java.awt.event.MouseAdapter() {
 //            public void mouseClicked(java.awt.event.MouseEvent evt) {
 //                appointmentTableMouseClicked(evt);
@@ -47,6 +44,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
                 populateFieldsFromSelectedRow();
             }
         });
+        
 
         controller = new AppointmentController();
         dpDate.getSettings().setDateRangeLimits(LocalDate.now().plusDays(1), null);
@@ -59,10 +57,12 @@ public class AppointmentPanel extends javax.swing.JPanel {
         dpTime.getSettings().setVetoPolicy(time -> {
             return !(time.isBefore(open) || time.isAfter(close));
         });
-
+        
         loadAppointments();
         loadCounselorsIntoDropdown();
         loadStatusesIntoDropdown();
+
+        
     }
 
     private void populateFieldsFromSelectedRow() {
@@ -172,11 +172,11 @@ public class AppointmentPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        dpTime = new com.github.lgooddatepicker.components.TimePicker();
-        dpDate = new com.github.lgooddatepicker.components.DatePicker();
         drpdwnStatus = new javax.swing.JComboBox<>();
         drpdwnCounsellor = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        dpDate = new com.github.lgooddatepicker.components.DatePicker();
+        dpTime = new com.github.lgooddatepicker.components.TimePicker();
 
         setBackground(new java.awt.Color(102, 204, 255));
         setPreferredSize(new java.awt.Dimension(800, 500));
@@ -268,8 +268,6 @@ public class AppointmentPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Status");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
-        add(dpTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
-        add(dpDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, -1));
 
         drpdwnStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Scheduled", "Completed", "Item 4" }));
         add(drpdwnStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 150, 30));
@@ -280,6 +278,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Counsellor");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        add(dpDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
+        add(dpTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppointmentActionPerformed
