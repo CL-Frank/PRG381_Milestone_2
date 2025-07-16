@@ -6,8 +6,41 @@ package com.bcwellness.controller;
 
 /**
  *
- * @author USER-PC
+ * @author vunen
  */
+
+import com.bcwellness.gui.FeedbackManagementPanel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class WellnessController {
-    
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            try (Connection conn = DriverManager.getConnection("jdbc:derby:wellnessDB;create=true")) {
+                JFrame frame = new JFrame("Wellness Management System");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(900, 600);
+                frame.setLayout(new BorderLayout());
+
+                JTabbedPane tabbedPane = new JTabbedPane();
+                tabbedPane.addTab("Feedback Management", new FeedbackManagementPanel(conn));
+
+                // Future modules can be added here as new tabs
+
+                frame.add(tabbedPane, BorderLayout.CENTER);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Database connection failed: " + e.getMessage(),
+                        "Connection Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
 }
+
