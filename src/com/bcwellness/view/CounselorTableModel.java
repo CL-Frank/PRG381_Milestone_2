@@ -6,7 +6,9 @@ import java.util.List;
 
 public class CounselorTableModel extends AbstractTableModel {
     private List<Counselor> counselors;
-    private String[] columnNames = {"ID", "Name", "Email", "Phone", "Specialization"};
+    
+    // Updated column names to match the data
+    private String[] columnNames = {"ID", "Name", "Surname", "Email", "Phone", "Specialization", "Availability"};
 
     public void setCounselors(List<Counselor> counselors) {
         this.counselors = counselors;
@@ -33,9 +35,11 @@ public class CounselorTableModel extends AbstractTableModel {
         switch (column) {
             case 0: return c.getId();
             case 1: return c.getName();
-            case 2: return c.getEmail();
-            case 3: return c.getPhone();
-            case 4: return c.getSpecialization();
+            case 2: return c.getSurname();         // Added Surname
+            case 3: return c.getEmail();
+            case 4: return c.getPhone();
+            case 5: return c.getSpecialization();
+            case 6: return c.getAvailability();     // Added Availability
             default: return null;
         }
     }
