@@ -85,4 +85,30 @@ public class FeedbackController {
             return null;
         }
     }
+    
+    public List<Feedback> searchFeedbackByStudentNumber(String studentNumber) {
+        return getFeedbackByStudent(studentNumber);
+    }
+    
+    // SUBMIT NEW FEEDBACK
+    public boolean submitFeedback(String studentNumber, String name, int rating, String comments) {
+        Feedback feedback = new Feedback();
+        feedback.setStudentNumber(studentNumber);
+        feedback.setStudentName(name);
+        feedback.setRating(rating);
+        feedback.setComments(comments);
+        return addFeedback(feedback);
+    }
+
+    // UPDATE EXISTING FEEDBACK
+    public boolean updateFeedback(int feedbackId, String name, int rating, String comments) {
+        Feedback feedback = new Feedback();
+        feedback.setFeedbackId(feedbackId);
+        feedback.setStudentName(name);
+        feedback.setRating(rating);
+        feedback.setComments(comments);
+        return updateFeedback(feedback);
+    }
+     
+    
 }
