@@ -16,7 +16,6 @@ public class AppointmentController {
     public AppointmentController() {
         try {
             Connection conn = DBConnection.getConnection();
-            DBConnection.InitializeDatabase();
 
             appointmentDAO = new AppointmentDAO(conn);
             if(conn != null){

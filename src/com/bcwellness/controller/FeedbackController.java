@@ -17,7 +17,6 @@ public class FeedbackController {
     public FeedbackController() {
         try {
             Connection conn = DBConnection.getConnection();
-            DBConnection.InitializeDatabase();
             
             feedbackDAO = new FeedbackDAO(conn);
             
