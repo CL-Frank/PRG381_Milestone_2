@@ -10,6 +10,7 @@ public class DBTest {
 
             if (conn != null && !conn.isClosed()) {
                 System.out.println("Connected to the database!");
+                conn.close();
             } else {
                 System.out.println("Failed to connect to the database.");
             }

@@ -40,7 +40,6 @@ public class AppointmentPanel extends javax.swing.JPanel {
      */
     public AppointmentPanel() {
         initComponents();
-
         // In constructor, after `initComponents()`:
 setLayout(new BorderLayout());
 
@@ -111,8 +110,6 @@ add(formPanel, BorderLayout.WEST);
 add(tableScroll, BorderLayout.CENTER);
 add(buttonPanel, BorderLayout.SOUTH);
 
-        
-        
         
 //        tblAppointments.addMouseListener(new java.awt.event.MouseAdapter() {
 //            public void mouseClicked(java.awt.event.MouseEvent evt) {

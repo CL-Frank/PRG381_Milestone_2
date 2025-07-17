@@ -18,7 +18,9 @@ public class CounselorManagementUI extends JPanel {
 
     private CounsellorController controller;
 
-    private JTextField txtName, txtEmail, txtPhone, txtSpecialization;
+    // UI Components
+    private JTextField txtName, txtEmail, txtPhone, txtSpecialization, txtSurname;
+    private JComboBox<String> cmbAvailability;
     private JButton btnAdd, btnUpdate, btnDelete, btnViewAll;
     private JTextArea txtOutput;
     private JTable counselorTable;
@@ -31,59 +33,64 @@ public class CounselorManagementUI extends JPanel {
     }
 
     private void setupUI() {
-        setLayout(new BorderLayout());
+    setLayout(new BorderLayout());
 
-        // Input fields
-        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 5, 5));
-        txtName = new JTextField();
-        txtEmail = new JTextField();
-        txtPhone = new JTextField();
-        txtSpecialization = new JTextField();
+    // Input Panel with 2 rows x 6 columns (label + input = 1 pair = 2 columns)
+    JPanel inputPanel = new JPanel(new GridLayout(3, 4, 5, 5));
+    txtName = new JTextField();
+    txtSurname = new JTextField();
+    txtEmail = new JTextField();
+    txtPhone = new JTextField();
+    txtSpecialization = new JTextField();
+    String[] availabilityOptions = {"Mon-Fri", "Mon-Thurs", "Tues-Fri", "Tues-Thurs", "Wed-Fri"};
+    cmbAvailability = new JComboBox<>(availabilityOptions);
 
-        inputPanel.add(new JLabel("Name:"));
-        inputPanel.add(txtName);
-        inputPanel.add(new JLabel("Email:"));
-        inputPanel.add(txtEmail);
-        inputPanel.add(new JLabel("Phone:"));
-        inputPanel.add(txtPhone);
-        inputPanel.add(new JLabel("Specialization:"));
-        inputPanel.add(txtSpecialization);
+    // Corrected label-input order
+    inputPanel.add(new JLabel("Name:"));            inputPanel.add(txtName);
+    inputPanel.add(new JLabel("Surname:"));         inputPanel.add(txtSurname);
+    inputPanel.add(new JLabel("Phone:"));           inputPanel.add(txtPhone);
+    inputPanel.add(new JLabel("Specialization:"));  inputPanel.add(txtSpecialization);
+    inputPanel.add(new JLabel("Availability:"));    inputPanel.add(cmbAvailability); // FIXED position
+    inputPanel.add(new JLabel("Email:"));           inputPanel.add(txtEmail);        // FIXED position
 
-        // Buttons
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        btnAdd = new JButton("Add");
-        btnUpdate = new JButton("Update");
-        btnDelete = new JButton("Delete");
-        btnViewAll = new JButton("View All");
-        buttonPanel.add(btnAdd);
-        buttonPanel.add(btnUpdate);
-        buttonPanel.add(btnDelete);
-        buttonPanel.add(btnViewAll);
+    // Button panel
+    JPanel buttonPanel = new JPanel(new FlowLayout());
+    btnAdd = new JButton("Add");
+    btnUpdate = new JButton("Update");
+    btnDelete = new JButton("Delete");
+    btnViewAll = new JButton("View All");
+    buttonPanel.add(btnAdd);
+    buttonPanel.add(btnUpdate);
+    buttonPanel.add(btnDelete);
+    buttonPanel.add(btnViewAll);
 
-        // Table
-        String[] columnNames = {"ID", "Name", "Surname", "Email", "Phone", "Specialization", "Availability"};
-        tableModel = new DefaultTableModel(columnNames, 0) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        counselorTable = new JTable(tableModel);
-        JScrollPane tableScrollPane = new JScrollPane(counselorTable);
+    // Table
+    String[] columnNames = {"ID", "Name", "Surname", "Email", "Phone", "Specialization", "Availability"};
+    tableModel = new DefaultTableModel(columnNames, 0) {
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    counselorTable = new JTable(tableModel);
+    JScrollPane tableScrollPane = new JScrollPane(counselorTable);
 
-        // Output log
-        txtOutput = new JTextArea(5, 40);
-        txtOutput.setEditable(false);
-        JScrollPane outputScrollPane = new JScrollPane(txtOutput);
+    // Output area
+    txtOutput = new JTextArea(5, 40);
+    txtOutput.setEditable(false);
+    JScrollPane outputScrollPane = new JScrollPane(txtOutput);
 
-        // Combine everything
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(inputPanel, BorderLayout.NORTH);
-        topPanel.add(buttonPanel, BorderLayout.SOUTH);
+    // Top panel = input + buttons
+    JPanel topPanel = new JPanel(new BorderLayout());
+    topPanel.add(inputPanel, BorderLayout.NORTH);
+    topPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        add(topPanel, BorderLayout.NORTH);
-        add(tableScrollPane, BorderLayout.CENTER);
-        add(outputScrollPane, BorderLayout.SOUTH);
-    }
+    // Final layout
+    add(topPanel, BorderLayout.NORTH);
+    add(tableScrollPane, BorderLayout.CENTER);
+    add(outputScrollPane, BorderLayout.SOUTH);
+}
+
+
 
     private void setupListeners() {
         btnAdd.addActionListener(this::handleAdd);
@@ -103,24 +110,33 @@ public class CounselorManagementUI extends JPanel {
 
     private void populateFieldsFromTable(int row) {
         txtName.setText((String) tableModel.getValueAt(row, 1));
+        txtSurname.setText((String) tableModel.getValueAt(row, 2));
         txtEmail.setText((String) tableModel.getValueAt(row, 3));
         txtPhone.setText((String) tableModel.getValueAt(row, 4));
         txtSpecialization.setText((String) tableModel.getValueAt(row, 5));
+        cmbAvailability.setSelectedItem(tableModel.getValueAt(row, 6));
     }
 
     private void handleAdd(ActionEvent e) {
-        String name = txtName.getText().trim();
-        String email = txtEmail.getText().trim();
-        String phone = txtPhone.getText().trim();
-        String specialization = txtSpecialization.getText().trim();
-
-        Counselor c = new Counselor(name, "surname", email, phone, specialization, "Available");
-        if (controller.addCounselor(c)) {
-            txtOutput.append("Counselor added.\n");
-            clearFields();
-            handleViewAll(null);
-        } else {
-            txtOutput.append("Failed to add counselor.\n");
+        try {
+            Counselor c = new Counselor(
+                    txtName.getText().trim(),
+                    txtSurname.getText().trim(),
+                    txtEmail.getText().trim(),
+                    txtPhone.getText().trim(),
+                    txtSpecialization.getText().trim(),
+                    (String) cmbAvailability.getSelectedItem()
+            );
+            if (controller.addCounselor(c)) {
+                txtOutput.append("Counselor added successfully.\n");
+                clearFields();
+                handleViewAll(null);
+            } else {
+                txtOutput.append("Failed to add counselor.\n");
+            }
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error adding counselor", ex);
+            txtOutput.append("Error adding counselor: " + ex.getMessage() + "\n");
         }
     }
 
@@ -131,23 +147,32 @@ public class CounselorManagementUI extends JPanel {
             return;
         }
 
-        int id = (int) tableModel.getValueAt(row, 0);
-        String name = txtName.getText().trim();
-        String email = txtEmail.getText().trim();
-        String phone = txtPhone.getText().trim();
-        String specialization = txtSpecialization.getText().trim();
-
-        Counselor c = new Counselor(id, name, "surname", email, phone, specialization, "Available");
-
-        if (controller.updateCounselor(c)) {
-            txtOutput.append("Counselor updated.\n");
-            handleViewAll(null);
-        } else {
-            txtOutput.append("Update failed.\n");
+        try {
+            int id = (int) tableModel.getValueAt(row, 0);
+            Counselor c = new Counselor(
+                    id,
+                    txtName.getText().trim(),
+                    txtSurname.getText().trim(),
+                    txtEmail.getText().trim(),
+                    txtPhone.getText().trim(),
+                    txtSpecialization.getText().trim(),
+                    (String) cmbAvailability.getSelectedItem()
+            );
+            if (controller.updateCounselor(c)) {
+                txtOutput.append("Counselor updated.\n");
+                handleViewAll(null);
+            } else {
+                txtOutput.append("Update failed.\n");
+            }
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error updating counselor", ex);
+            txtOutput.append("Error updating counselor.\n");
         }
     }
 
-    private void handleDelete(ActionEvent e) {
+
+
+        private void handleDelete(ActionEvent e) {
         int row = counselorTable.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Select a counselor to delete.");
@@ -187,8 +212,22 @@ public class CounselorManagementUI extends JPanel {
 
     private void clearFields() {
         txtName.setText("");
+        txtSurname.setText("");
         txtEmail.setText("");
         txtPhone.setText("");
         txtSpecialization.setText("");
+        cmbAvailability.setSelectedIndex(0);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Counselor Management");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setContentPane(new CounselorManagementUI());
+            frame.setSize(800, 600);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
     }
 }
+
