@@ -7,6 +7,9 @@ package com.bcwellness.view;
 import com.bcwellness.controller.*;
 import com.bcwellness.model.*;
 import com.bcwellness.db.DBConnection;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,7 +17,13 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -31,6 +40,79 @@ public class AppointmentPanel extends javax.swing.JPanel {
      */
     public AppointmentPanel() {
         initComponents();
+
+        // In constructor, after `initComponents()`:
+setLayout(new BorderLayout());
+
+// Replace absolute layout with:
+JPanel formPanel = new JPanel();
+        GroupLayout layout = new GroupLayout(formPanel);
+formPanel.setLayout(layout);
+formPanel.setBorder(BorderFactory.createTitledBorder("Appointment Details"));
+
+layout.setAutoCreateGaps(true);
+layout.setAutoCreateContainerGaps(true);
+
+layout.setHorizontalGroup(
+    layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+            .addComponent(jLabel6)  // Counselor
+            .addComponent(jLabel3)  // Student
+            .addComponent(jLabel1)  // Date
+            .addComponent(jLabel4)  // Time
+            .addComponent(jLabel5)) // Status
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(drpdwnCounselor)
+            .addComponent(txtStudent1)
+            .addComponent(dpDate)
+            .addComponent(dpTime)
+            .addComponent(drpdwnStatus))
+);
+
+layout.setVerticalGroup(
+    layout.createSequentialGroup()
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel6)
+            .addComponent(drpdwnCounselor))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel3)
+            .addComponent(txtStudent1))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel1)
+            .addComponent(dpDate))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel4)
+            .addComponent(dpTime))
+        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel5)
+            .addComponent(drpdwnStatus))
+);
+
+// Button Panel
+JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+buttonPanel.add(btnAddAppointment);
+buttonPanel.add(btnUpdate);
+buttonPanel.add(btnDelete);
+buttonPanel.add(btnClear);
+
+// Table
+JScrollPane tableScroll = new JScrollPane(tblAppointments);
+tblAppointments.setFillsViewportHeight(true);
+tblAppointments.setPreferredScrollableViewportSize(new Dimension(500, 250));
+
+// Header Label
+JLabel titleLabel = new JLabel("Appointments");
+titleLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 24));
+titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+add(titleLabel, BorderLayout.NORTH);
+
+// Main add layout
+add(formPanel, BorderLayout.WEST);
+add(tableScroll, BorderLayout.CENTER);
+add(buttonPanel, BorderLayout.SOUTH);
+
+        
+        
         
 //        tblAppointments.addMouseListener(new java.awt.event.MouseAdapter() {
 //            public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -178,7 +260,6 @@ public class AppointmentPanel extends javax.swing.JPanel {
         dpDate = new com.github.lgooddatepicker.components.DatePicker();
         dpTime = new com.github.lgooddatepicker.components.TimePicker();
 
-        setBackground(new java.awt.Color(102, 204, 255));
         setPreferredSize(new java.awt.Dimension(800, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -273,7 +354,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         add(drpdwnStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 160, 30));
 
         drpdwnCounselor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(drpdwnCounselor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 150, 30));
+        add(drpdwnCounselor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Counsellor");
