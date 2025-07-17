@@ -35,6 +35,7 @@ public class FeedbackManagementPanel extends javax.swing.JPanel {
      */
     public FeedbackManagementPanel() {
         initComponents();
+        controller = new FeedbackController();
     }
 
     /**
@@ -80,8 +81,13 @@ public class FeedbackManagementPanel extends javax.swing.JPanel {
             }
         });
 
-        btnViewAll.setText("View All");
         btnViewAll.setBackground(new java.awt.Color(0, 255, 255));
+        btnViewAll.setText("View All");
+        btnViewAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewAllActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Edit");
         btnEdit.setBackground(new java.awt.Color(0, 255, 255));
@@ -399,6 +405,10 @@ public class FeedbackManagementPanel extends javax.swing.JPanel {
             ExceptionHandler.handleDatabaseError("loading statistics", e);
         }
     }//GEN-LAST:event_btnStatsActionPerformed
+
+    private void btnViewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewAllActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnViewAllActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

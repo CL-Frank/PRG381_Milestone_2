@@ -47,13 +47,14 @@ public class FeedbackDAO {
     public boolean addFeedback(Feedback feedback) throws DatabaseException, ValidationException {
         validateFeedback(feedback);
 
-        String sql = "INSERT INTO FEEDBACK (STUDENT_NUMBER, STUDENT_NAME, RATING, COMMENTS) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO FEEDBACK (STUDENT_NUMBER ,NAME, RATING, COMMENTS, SUBMITTED_AT) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, feedback.getStudentNumber());
             pstmt.setString(2, feedback.getStudentName());
             pstmt.setInt(3, feedback.getRating());
             pstmt.setString(4, feedback.getComments());
+            pstmt.setString(5, LocalDateTime.now().toString());
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -166,7 +167,7 @@ public class FeedbackDAO {
     private Feedback mapResultSetToFeedback(ResultSet rs) throws SQLException {
         return new Feedback(
             rs.getInt("FEEDBACK_ID"),           
-            rs.getString("STUDENT_NUMBER"),     
+            rs.getString("NAME"),     
             rs.getString("STUDENT_NAME"),        
             rs.getInt("RATING"),                
             rs.getString("COMMENTS"),            
