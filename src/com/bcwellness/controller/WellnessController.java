@@ -9,7 +9,9 @@ package com.bcwellness.controller;
  * @author vunen
  */
 
-import com.bcwellness.gui.FeedbackManagementPanel;
+import com.bcwellness.db.DBConnection;
+import com.bcwellness.view.AppointmentPanel;
+import com.bcwellness.view.FeedbackManagementPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,14 +22,15 @@ import java.sql.SQLException;
 public class WellnessController {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            try (Connection conn = DriverManager.getConnection("jdbc:derby:wellnessDB;create=true")) {
+            try (Connection conn = DBConnection.getConnection()) {
                 JFrame frame = new JFrame("Wellness Management System");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(900, 600);
                 frame.setLayout(new BorderLayout());
 
                 JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Feedback Management", new FeedbackManagementPanel(conn));
+                tabbedPane.addTab("Feedback Management", new FeedbackManagementPanel());
+                tabbedPane.addTab("Appointment Panel", new AppointmentPanel());
 
                 // Future modules can be added here as new tabs
 

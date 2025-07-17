@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.bcwellness.gui;
+package com.bcwellness.view;
 
 /**
  *
@@ -11,6 +11,7 @@ package com.bcwellness.gui;
 
 import com.bcwellness.dao.FeedbackDAO;
 import com.bcwellness.model.Feedback;
+import com.bcwellness.controller.FeedbackController;
 import com.bcwellness.exception.ExceptionHandler;
 import com.bcwellness.exception.ExceptionHandler.DatabaseException;
 import com.bcwellness.exception.ExceptionHandler.ValidationException;
@@ -24,12 +25,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class FeedbackManagementPanel extends JPanel {
-    private final FeedbackDAO feedbackDAO;
     private final JTable feedbackTable;
     private final DefaultTableModel tableModel;
+    private FeedbackController controller;
 
-    public FeedbackManagementPanel(Connection connection) {
-        this.feedbackDAO = new FeedbackDAO(connection);
+    public FeedbackManagementPanel() {
+        controller = new FeedbackController();
         setLayout(new BorderLayout());
 
         tableModel = new DefaultTableModel(new String[]{
@@ -59,7 +60,7 @@ public class FeedbackManagementPanel extends JPanel {
     private void loadFeedback() {
         try {
             tableModel.setRowCount(0);
-            List<Feedback> feedbackList = feedbackDAO.getAllFeedback();
+            List<Feedback> feedbackList = controller.getAllFeedback();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             for (Feedback f : feedbackList) {
                 tableModel.addRow(new Object[]{
@@ -71,7 +72,7 @@ public class FeedbackManagementPanel extends JPanel {
                     f.getSubmittedAt().format(formatter)
                 });
             }
-        } catch (DatabaseException e) {
+        } catch (Exception e) {
             ExceptionHandler.handleDatabaseError("fetching feedback", e);
         }
     }
@@ -82,11 +83,11 @@ public class FeedbackManagementPanel extends JPanel {
             int feedbackId = (int) tableModel.getValueAt(selectedRow, 0);
             if (ExceptionHandler.showConfirmDialog("Are you sure you want to delete this feedback?")) {
                 try {
-                    if (feedbackDAO.deleteFeedback(feedbackId)) {
+                    if (controller.deleteFeedback(feedbackId)) {
                         ExceptionHandler.showSuccessMessage("Feedback deleted successfully.");
                         loadFeedback();
                     }
-                } catch (DatabaseException e) {
+                } catch (Exception e) {
                     ExceptionHandler.handleDatabaseError("deleting feedback", e);
                 }
             }
@@ -97,7 +98,7 @@ public class FeedbackManagementPanel extends JPanel {
 
     private void showStats() {
         try {
-            FeedbackDAO.FeedbackStats stats = feedbackDAO.getFeedbackStats();
+            FeedbackDAO.FeedbackStats stats = controller.getFeedbackStats();
             String message = String.format(
                 "Total Feedback: %d\nAverage Rating: %.2f\nHighest Rating: %d\nLowest Rating: %d",
                 stats.getTotalFeedback(),
@@ -106,7 +107,7 @@ public class FeedbackManagementPanel extends JPanel {
                 stats.getLowestRating()
             );
             JOptionPane.showMessageDialog(this, message, "Feedback Stats", JOptionPane.INFORMATION_MESSAGE);
-        } catch (DatabaseException e) {
+        } catch (Exception e) {
             ExceptionHandler.handleDatabaseError("loading statistics", e);
         }
     }

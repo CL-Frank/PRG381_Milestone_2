@@ -4,10 +4,10 @@
  */
 package com.bcwellness.view;
 
-import com.bcwellness.controller.AppointmentController;
+import com.bcwellness.controller.*;
 import com.bcwellness.model.*;
-import com.bcwellness.dao.CounselorDAO;
 import com.bcwellness.db.DBConnection;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -122,8 +122,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
     private void loadCounselorsIntoDropdown() {
         try {
             //Should instead call the controller when its made
-            CounselorDAO dao = new CounselorDAO(DBConnection.getConnection());
-            councelorList = dao.getAllCounselors();
+            CounsellorController counsellorController = new CounsellorController();
+            councelorList = counsellorController.getAllCounselors();
 
             drpdwnCounsellor.removeAllItems();
             drpdwnCounsellor.addItem("Select Councellor");

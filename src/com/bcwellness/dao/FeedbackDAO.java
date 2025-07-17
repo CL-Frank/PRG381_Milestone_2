@@ -19,30 +19,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackDAO {
-    private final Connection connection;
+    private Connection connection;
 
     public FeedbackDAO(Connection connection) {
         this.connection = connection;
-        createFeedbackTable();
+//        createFeedbackTable();
     }
 
-    private void createFeedbackTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS feedback ("
-        + "feedback_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, "
-        + "student_number VARCHAR(20) NOT NULL, "
-        + "student_name VARCHAR(100) NOT NULL, "
-        + "rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5), "
-        + "comments CLOB, "
-        + "submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-        + ")";
-
-
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            ExceptionHandler.handleDatabaseError("table creation", e);
-        }
-    }
+//    private void createFeedbackTable() {
+//        String sql = "CREATE TABLE IF NOT EXISTS feedback ("
+//        + "feedback_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, "
+//        + "student_number VARCHAR(20) NOT NULL, "
+//        + "student_name VARCHAR(100) NOT NULL, "
+//        + "rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5), "
+//        + "comments CLOB, "
+//        + "submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+//        + ")";
+//
+//
+//        try (Statement stmt = connection.createStatement()) {
+//            stmt.execute(sql);
+//        } catch (SQLException e) {
+//            ExceptionHandler.handleDatabaseError("table creation", e);
+//        }
+//    }
 
     public boolean addFeedback(Feedback feedback) throws DatabaseException, ValidationException {
         validateFeedback(feedback);
@@ -72,7 +72,7 @@ public class FeedbackDAO {
 
     public List<Feedback> getAllFeedback() throws DatabaseException {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT * FROM feedback ORDER BY submitted_at DESC";
+        String sql = "SELECT * FROM Feedback ORDER BY submitted_at DESC";
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -169,9 +169,9 @@ public class FeedbackDAO {
 
     private Feedback mapResultSetToFeedback(ResultSet rs) throws SQLException {
         return new Feedback(
-            rs.getInt("feedback_id"),
+            rs.getInt("id"),
             rs.getString("student_number"),
-            rs.getString("student_name"),
+            rs.getString("name"),
             rs.getInt("rating"),
             rs.getString("comments"),
             rs.getTimestamp("submitted_at").toLocalDateTime()

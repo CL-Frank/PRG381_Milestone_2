@@ -3,7 +3,6 @@ package com.bcwellness.controller;
 import com.bcwellness.dao.AppointmentDAO;
 import com.bcwellness.db.DBConnection;
 import com.bcwellness.model.Appointment;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
