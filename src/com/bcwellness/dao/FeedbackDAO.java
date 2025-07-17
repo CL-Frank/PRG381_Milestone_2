@@ -25,29 +25,29 @@ public class FeedbackDAO {
         this.connection = connection;
 //        createFeedbackTable();
     }
-
+ // Creates the FEEDBACK table if it does not already exist
 //    private void createFeedbackTable() {
-//        String sql = "CREATE TABLE IF NOT EXISTS feedback ("
-//        + "feedback_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, "
-//        + "student_number VARCHAR(20) NOT NULL, "
-//        + "student_name VARCHAR(100) NOT NULL, "
-//        + "rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5), "
-//        + "comments CLOB, "
-//        + "submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+//       String sql = "CREATE TABLE IF NOT EXISTS FEEDBACK ("
+//        + "FEEDBACK_ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, "
+//        + "STUDENT_NUMBER VARCHAR(20) NOT NULL, "
+//        + "STUDENT_NAME VARCHAR(100) NOT NULL, "
+//        + "RATING INTEGER NOT NULL CHECK (RATING >= 1 AND RATING <= 5), "
+//        + "COMMENTS CLOB, "
+//        + "SUBMITTED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
 //        + ")";
-//
-//
+
+
 //        try (Statement stmt = connection.createStatement()) {
 //            stmt.execute(sql);
 //        } catch (SQLException e) {
 //            ExceptionHandler.handleDatabaseError("table creation", e);
-//        }
+//       }
 //    }
-
+    // Adds a new feedback record to the database after validation
     public boolean addFeedback(Feedback feedback) throws DatabaseException, ValidationException {
         validateFeedback(feedback);
 
-        String sql = "INSERT INTO feedback (student_number, student_name, rating, comments) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO FEEDBACK (STUDENT_NUMBER, STUDENT_NAME, RATING, COMMENTS) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, feedback.getStudentNumber());
@@ -69,10 +69,10 @@ public class FeedbackDAO {
             throw new DatabaseException("Failed to add feedback", e);
         }
     }
-
+    // Retrieves all feedback records sorted by submission date (newest first)
     public List<Feedback> getAllFeedback() throws DatabaseException {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT * FROM Feedback ORDER BY submitted_at DESC";
+        String sql = "SELECT * FROM FEEDBACK ORDER BY SUBMITTED_AT DESC";
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -84,7 +84,7 @@ public class FeedbackDAO {
 
         return list;
     }
-
+    // Retrieves feedback submitted by a specific student
     public List<Feedback> getFeedbackByStudent(String studentNumber) throws DatabaseException {
         List<Feedback> list = new ArrayList<>();
         String sql = "SELECT * FROM Feedback WHERE student_number = ? ORDER BY submitted_at DESC";
@@ -102,10 +102,10 @@ public class FeedbackDAO {
 
         return list;
     }
-
+    // Updates rating and comments for an existing feedback record
     public boolean updateFeedback(Feedback feedback) throws DatabaseException, ValidationException {
         validateFeedback(feedback);
-        String sql = "UPDATE feedback SET rating = ?, comments = ? WHERE feedback_id = ?";
+        String sql = "UPDATE FEEDBACK SET RATING = ?, COMMENTS = ? WHERE FEEDBACK_ID = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, feedback.getRating());
@@ -116,9 +116,9 @@ public class FeedbackDAO {
             throw new DatabaseException("Failed to update feedback", e);
         }
     }
-
+    // Deletes a feedback record by its ID
     public boolean deleteFeedback(int feedbackId) throws DatabaseException {
-        String sql = "DELETE FROM feedback WHERE feedback_id = ?";
+        String sql = "DELETE FROM FEEDBACK WHERE FEEDBACK_ID = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, feedbackId);
@@ -127,14 +127,10 @@ public class FeedbackDAO {
             throw new DatabaseException("Failed to delete feedback", e);
         }
     }
-
+    // Retrieves statistics about the feedback data: total count, average, highest, and lowest rating
     public FeedbackStats getFeedbackStats() throws DatabaseException {
-        String sql = "SELECT "
-        + "COUNT(*) as total_feedback, "
-        + "AVG(CAST(rating AS DOUBLE)) as average_rating, "
-        + "MAX(rating) as highest_rating, "
-        + "MIN(rating) as lowest_rating "
-        + "FROM feedback";
+        String sql = "SELECT COUNT(*) as TOTAL_FEEDBACK, AVG(CAST(RATING AS DOUBLE)) as AVERAGE_RATING, \"\n" +
+"           + \"MAX(RATING) as HIGHEST_RATING, MIN(RATING) as LOWEST_RATING FROM FEEDBACK";
 
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
@@ -151,7 +147,7 @@ public class FeedbackDAO {
             throw new DatabaseException("Failed to retrieve feedback statistics", e);
         }
     }
-
+    // Validates feedback fields before inserting/updating
     private void validateFeedback(Feedback feedback) throws ValidationException {
         if (feedback.getStudentNumber() == null || feedback.getStudentNumber().trim().isEmpty()) {
             throw new ValidationException("Student number is required");
@@ -166,18 +162,20 @@ public class FeedbackDAO {
             throw new ValidationException("Comments must be less than 1000 characters");
         }
     }
-
+    // Maps a database row (ResultSet) into a Feedback Java object
     private Feedback mapResultSetToFeedback(ResultSet rs) throws SQLException {
         return new Feedback(
-            rs.getInt("id"),
-            rs.getString("student_number"),
-            rs.getString("name"),
-            rs.getInt("rating"),
-            rs.getString("comments"),
-            rs.getTimestamp("submitted_at").toLocalDateTime()
+            rs.getInt("FEEDBACK_ID"),           
+            rs.getString("STUDENT_NUMBER"),     
+            rs.getString("STUDENT_NAME"),        
+            rs.getInt("RATING"),                
+            rs.getString("COMMENTS"),            
+            rs.getTimestamp("SUBMITTED_AT").toLocalDateTime() 
         );
     }
-
+     /**
+     * Inner class to represent feedback statistics (summary values).
+     */
     public static class FeedbackStats {
         private final int totalFeedback;
         private final double averageRating;
