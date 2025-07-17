@@ -182,9 +182,9 @@ public class AppointmentPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(800, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Appointments");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, -1, 34));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, 34));
 
         tblAppointments.setAutoCreateRowSorter(true);
         tblAppointments.setModel(new javax.swing.table.DefaultTableModel(
@@ -217,7 +217,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
             tblAppointments.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, -1, 269));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, -1, 269));
 
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +225,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
                 btnClearActionPerformed(evt);
             }
         });
-        add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
+        add(btnClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, -1, -1));
 
         btnAddAppointment.setText("New Appointment");
         btnAddAppointment.addActionListener(new java.awt.event.ActionListener() {
@@ -233,16 +233,16 @@ public class AppointmentPanel extends javax.swing.JPanel {
                 btnAddAppointmentActionPerformed(evt);
             }
         });
-        add(btnAddAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 400, -1, -1));
+        add(btnAddAppointment, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
 
-        btnDelete.setBackground(new java.awt.Color(255, 51, 51));
         btnDelete.setText("Delete");
+        btnDelete.setBackground(new java.awt.Color(255, 51, 51));
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
             }
         });
-        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, -1, -1));
+        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 360, -1, -1));
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -250,7 +250,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
                 btnUpdateActionPerformed(evt);
             }
         });
-        add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, -1, -1));
+        add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Date");
@@ -270,7 +270,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         drpdwnStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Scheduled", "Completed", "Item 4" }));
-        add(drpdwnStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 150, 30));
+        add(drpdwnStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 160, 30));
 
         drpdwnCounselor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         add(drpdwnCounselor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 150, 30));
@@ -278,8 +278,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Counsellor");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
-        add(dpDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
-        add(dpTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
+        add(dpDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 160, -1));
+        add(dpTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 160, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddAppointmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAppointmentActionPerformed
