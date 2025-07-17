@@ -15,10 +15,8 @@ public class CounsellorController {
     public CounsellorController() {
         try {
             Connection conn = DBConnection.getConnection();
-            DBConnection.InitializeDatabase();
 
             counselorDAO = new CounselorDAO(); // DAO manages its own connection internally
-            System.out.println("CounselorController connected to database.");
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize CounselorController", e);
         }

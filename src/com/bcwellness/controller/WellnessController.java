@@ -10,8 +10,7 @@ package com.bcwellness.controller;
  */
 
 import com.bcwellness.db.DBConnection;
-import com.bcwellness.view.AppointmentPanel;
-import com.bcwellness.view.FeedbackManagementPanel;
+import com.bcwellness.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +31,7 @@ public class WellnessController {
                 JTabbedPane tabbedPane = new JTabbedPane();
                 tabbedPane.addTab("Feedback Management", new FeedbackManagementPanel());
                 tabbedPane.addTab("Appointment Panel", new AppointmentPanel());
+                tabbedPane.addTab("Counselors", new CounselorManagementUI());
 
                 // Future modules can be added here as new tabs
 

@@ -24,7 +24,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
 
     private AppointmentController controller;
     private int selectedAppointmentID = -1;
-    private List<Counselor> councelorList = new ArrayList<>();
+    private List<Counselor> counselorList = new ArrayList<>();
 
     /**
      * Creates new form AppointmentPanel
@@ -47,6 +47,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         
 
         controller = new AppointmentController();
+        
         dpDate.getSettings().setDateRangeLimits(LocalDate.now().plusDays(1), null);
 
         dpTime.getSettings().setAllowKeyboardEditing(false);
@@ -88,7 +89,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
             dpDate.setDate(date);
             dpTime.setTime(time);
             drpdwnStatus.setSelectedItem(status);
-            drpdwnCounsellor.setSelectedItem(counselorName);
+            drpdwnCounselor.setSelectedItem(counselorName);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -109,8 +110,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
                 });
             }
             // Hide ID column
-            tblAppointments.getColumnModel().getColumn(0).setMinWidth(0);
-            tblAppointments.getColumnModel().getColumn(0).setMaxWidth(0);
+
             tblAppointments.getColumnModel().getColumn(0).setWidth(0);
 
         } catch (Exception e) {
@@ -123,14 +123,14 @@ public class AppointmentPanel extends javax.swing.JPanel {
         try {
             //Should instead call the controller when its made
             CounsellorController counsellorController = new CounsellorController();
-            councelorList = counsellorController.getAllCounselors();
+            counselorList = counsellorController.getAllCounselors();
 
-            drpdwnCounsellor.removeAllItems();
-            drpdwnCounsellor.addItem("Select Councellor");
-            for (Counselor c : councelorList) {
-                drpdwnCounsellor.addItem(c.getName());  // Display name only
+            drpdwnCounselor.removeAllItems();
+            drpdwnCounselor.addItem("Select Councellor");
+            for (Counselor c : counselorList) {
+                drpdwnCounselor.addItem(c.getName());  // Display name only
             }
-            drpdwnCounsellor.setSelectedIndex(0);
+            drpdwnCounselor.setSelectedIndex(0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Failed to load counselors.");
             e.printStackTrace();
@@ -148,7 +148,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
     }
 
     private void clearForm() {
-        drpdwnCounsellor.setSelectedIndex(0);
+        drpdwnCounselor.setSelectedIndex(0);
         txtStudent1.setText("");
         dpDate.clear();
         dpTime.clear();
@@ -173,7 +173,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         drpdwnStatus = new javax.swing.JComboBox<>();
-        drpdwnCounsellor = new javax.swing.JComboBox<>();
+        drpdwnCounselor = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         dpDate = new com.github.lgooddatepicker.components.DatePicker();
         dpTime = new com.github.lgooddatepicker.components.TimePicker();
@@ -272,8 +272,8 @@ public class AppointmentPanel extends javax.swing.JPanel {
         drpdwnStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Scheduled", "Completed", "Item 4" }));
         add(drpdwnStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 150, 30));
 
-        drpdwnCounsellor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(drpdwnCounsellor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 150, 30));
+        drpdwnCounselor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(drpdwnCounselor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 150, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Counsellor");
@@ -289,7 +289,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
             LocalDate date = dpDate.getDate();
             LocalTime time = dpTime.getTime();
             String status = (String) drpdwnStatus.getSelectedItem();
-            String counselorName = (String) drpdwnCounsellor.getSelectedItem();
+            String counselorName = (String) drpdwnCounselor.getSelectedItem();
 
             // Validate fields
             if (student.isEmpty() || date == null || time == null
@@ -299,7 +299,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
             }
 
             int counselorID = -1;
-            for (Counselor c : councelorList) {
+            for (Counselor c : counselorList) {
                 if (c.getName().equals(counselorName)) {
                     counselorID = c.getId();
                     break;
@@ -366,15 +366,15 @@ public class AppointmentPanel extends javax.swing.JPanel {
             LocalDate date = dpDate.getDate();
             LocalTime time = dpTime.getTime();
             String status = (String) drpdwnStatus.getSelectedItem();
-            String counselorName = (String) drpdwnCounsellor.getSelectedItem();
+            String counselorName = (String) drpdwnCounselor.getSelectedItem();
 
-            if (student.isEmpty() || date == null || time == null || drpdwnCounsellor.getSelectedIndex() == 0 || drpdwnStatus.getSelectedIndex() == 0) {
+            if (student.isEmpty() || date == null || time == null || drpdwnCounselor.getSelectedIndex() == 0 || drpdwnStatus.getSelectedIndex() == 0) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields.");
                 return;
             }
 
             int counselorID = -1;
-            for (Counselor c : councelorList) {
+            for (Counselor c : counselorList) {
                 if (c.getName().equals(counselorName)) {
                     counselorID = c.getId();
                     break;
@@ -403,7 +403,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        // TODO add your handling code here:
+        
         clearForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
@@ -415,7 +415,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnUpdate;
     private com.github.lgooddatepicker.components.DatePicker dpDate;
     private com.github.lgooddatepicker.components.TimePicker dpTime;
-    private javax.swing.JComboBox<String> drpdwnCounsellor;
+    private javax.swing.JComboBox<String> drpdwnCounselor;
     private javax.swing.JComboBox<String> drpdwnStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
