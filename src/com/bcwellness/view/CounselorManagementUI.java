@@ -18,7 +18,8 @@ public class CounselorManagementUI extends JFrame {
     private CounselorDAO counselorDAO;
 
     // UI Components
-    private JTextField txtName, txtEmail, txtPhone, txtSpecialization;
+    private JTextField txtName, txtEmail, txtPhone, txtSpecialization, txtSurname;
+    private JComboBox<String> cmbAvailability;
     private JButton btnAdd, btnUpdate, btnDelete, btnViewAll;
     private JTextArea txtOutput;
     private JTable counselorTable;
@@ -57,12 +58,19 @@ public class CounselorManagementUI extends JFrame {
 
         inputPanel.add(new JLabel("Name:"));
         inputPanel.add(txtName);
+        inputPanel.add(new JLabel("Surname:"));
+        txtSurname = new JTextField();
+        inputPanel.add(txtSurname);
         inputPanel.add(new JLabel("Email:"));
         inputPanel.add(txtEmail);
         inputPanel.add(new JLabel("Phone:"));
         inputPanel.add(txtPhone);
         inputPanel.add(new JLabel("Specialization:"));
         inputPanel.add(txtSpecialization);
+        inputPanel.add(new JLabel("Availability:"));
+        String[] availabilityOptions = {"Mon-Fri", "Mon-Thurs", "Tues-Fri", "Tues-Thurs", "Wed-Fri"};
+        cmbAvailability = new JComboBox<>(availabilityOptions);
+        inputPanel.add(cmbAvailability);
 
         // Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -136,11 +144,13 @@ public class CounselorManagementUI extends JFrame {
 
     private void addCounselor() {
         try {
-            Counselor c = new Counselor(0,
-                    txtName.getText(),
-                    txtEmail.getText(),
-                    txtPhone.getText(),
-                    txtSpecialization.getText());
+        Counselor c = new Counselor(0,
+        txtName.getText(),
+        txtSurname.getText(),
+        txtEmail.getText(),
+        txtPhone.getText(),
+        txtSpecialization.getText(),
+        (String) cmbAvailability.getSelectedItem());
             if (counselorDAO.addCounselor(c)) {
                 txtOutput.append("Counselor added successfully.\n");
                 clearFields();
@@ -213,7 +223,7 @@ public class CounselorManagementUI extends JFrame {
      */
     // </editor-fold>
 @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -230,7 +240,7 @@ public class CounselorManagementUI extends JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     /**
      * @param args the command line arguments
@@ -270,6 +280,6 @@ public class CounselorManagementUI extends JFrame {
         java.awt.EventQueue.invokeLater(() -> new CounselorManagementUI().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify                     
+    // End of variables declaration                   
 }
