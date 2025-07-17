@@ -87,7 +87,7 @@ public class FeedbackDAO {
 
     public List<Feedback> getFeedbackByStudent(String studentNumber) throws DatabaseException {
         List<Feedback> list = new ArrayList<>();
-        String sql = "SELECT * FROM feedback WHERE student_number = ? ORDER BY submitted_at DESC";
+        String sql = "SELECT * FROM Feedback WHERE student_number = ? ORDER BY submitted_at DESC";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, studentNumber);

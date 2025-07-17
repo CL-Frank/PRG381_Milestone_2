@@ -23,7 +23,7 @@ public class WellnessController {
         SwingUtilities.invokeLater(() -> {
             try (Connection conn = DBConnection.getConnection()) {
                 DBConnection.InitializeDatabase();
-                JFrame frame = new JFrame("Wellness Management System");
+                JFrame frame = new JFrame("Wellness Management System"); 
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(900, 600);
                 frame.setLayout(new BorderLayout());
