@@ -18,6 +18,10 @@ public class DBConnection {
     private static final String PASSWORD = "0618";
     private static final String DRIVER = "org.apache.derby.jdbc.ClientDriver";
 
+    public static void closeConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     //  Active database connection
     private Connection connection;
 
@@ -34,6 +38,10 @@ public class DBConnection {
         return instance;
     }
 
+    public static Connection getConnection() {
+        return getInstance().connection;
+    }
+    
     //  Initializes the database connection
     private void initializeConnection() {
         try {
@@ -55,7 +63,7 @@ public class DBConnection {
     }
 
     // Gets active connection (auto-reconnects if needed)
-    public Connection getConnection() throws SQLException {
+    public synchronized Connection getStaticConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             reconnect();
         }
