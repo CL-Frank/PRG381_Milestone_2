@@ -5,7 +5,9 @@ PRG381 Project Milestone 2
 - **Caydan Frank 578131**  
 - **Vunene Khoza 600676**   
 - **Yanga Mazibuko 600459**
-- **Tshifiwa Muade 576941**
+- **Tshifiwa Muade 576941**  
+---
+## Prerequisites 
 Before you run the project, ensure you have:
 
 - [NetBeans IDE (version 15+ recommended)](https://netbeans.apache.org/download/index.html)
